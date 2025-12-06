@@ -5,7 +5,8 @@ function SearchBar({
   onSearchTypeChange, 
   onSearch, 
   onClear,
-  isFiltered 
+  hasActiveFilter,
+  inputMatchesFilter
 }) {
   const placeholders = {
     guild: "Search guild...",
@@ -14,10 +15,14 @@ function SearchBar({
   }
 
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && value.trim()) {
       onSearch()
     }
   }
+
+  // Show Clear when: there's an active filter AND (input is empty OR matches the filter)
+  // Show Search when: input has content that differs from the applied filter
+  const showClear = hasActiveFilter && (!value.trim() || inputMatchesFilter)
 
   return (
     <div className="max-w-xl mx-auto">
@@ -56,7 +61,7 @@ function SearchBar({
           />
         </div>
 
-        {isFiltered ? (
+        {showClear ? (
           <button
             onClick={onClear}
             className="px-4 py-3 bg-zinc-700 hover:bg-zinc-600 text-zinc-100 rounded-lg transition-colors flex items-center gap-2"

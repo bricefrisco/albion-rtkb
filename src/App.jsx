@@ -232,7 +232,8 @@ function App() {
           onSearchTypeChange={setSearchType}
           onSearch={handleSearch}
           onClear={handleClear}
-          isFiltered={inputMatchesFilter}
+          hasActiveFilter={isFiltered}
+          inputMatchesFilter={inputMatchesFilter}
         />
 
         {isFiltered && (
